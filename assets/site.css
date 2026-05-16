@@ -51,11 +51,17 @@ h1 {
   flex-wrap: wrap;
   gap: 10px 16px;
 }
-.topnav a, a {
+.topnav a,
+.post-card a,
+.status-message a {
   color: var(--link);
   text-decoration: none;
 }
-a:hover { text-decoration: underline; }
+.topnav a:hover,
+.post-card a:hover,
+.status-message a:hover {
+  text-decoration: underline;
+}
 .section { margin-top: 42px; }
 .post-card {
   background: var(--paper);
@@ -85,6 +91,13 @@ a:hover { text-decoration: underline; }
   font: 11px var(--mono);
   text-transform: uppercase;
   color: var(--muted);
+}
+.status-message {
+  color: var(--muted);
+}
+.status-message.error-state {
+  border-color: var(--accent);
+  color: var(--text);
 }
 @media (max-width: 760px) {
   .page-shell { width: min(100vw - 24px, 1100px); padding-top: 28px; }
