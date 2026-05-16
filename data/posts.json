@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "title": "Rubin Scale-Out Networking Supplier Map",
+    "slug": "rubin-scale-out-networking-supplier-map",
+    "published": "2026-05-15",
+    "summary": "Rubin scale-out stack and supplier map across LinkX, Spectrum-X, Quantum-X, and NVIDIA\u2019s photonics ecosystem.",
+    "tags": [
+      "ai-infra",
+      "nvidia",
+      "networking",
+      "cpo"
+    ],
+    "source_path": "analysis/ai-infra/nvda-tech-trends/rubin-scale-out-stack.html",
+    "public_path": "posts/rubin-scale-out-networking-supplier-map/index.html"
+  }
+]

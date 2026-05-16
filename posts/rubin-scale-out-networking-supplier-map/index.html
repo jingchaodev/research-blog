@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rubin Scale-Out Networking Supplier Map</title>
+<meta name="post:title" content="Rubin Scale-Out Networking Supplier Map">
+<meta name="post:summary" content="Rubin scale-out stack and supplier map across LinkX, Spectrum-X, Quantum-X, and NVIDIA’s photonics ecosystem.">
+<meta name="post:published" content="2026-05-15">
+<meta name="post:tags" content="ai-infra,nvidia,networking,cpo">
+<style>
+:root {
+  --ivory: #FAF9F5;
+  --paper: #FFFFFF;
+  --slate: #141413;
+  --ink: #32322F;
+  --muted: #74736D;
+  --line: #D8D5CA;
+  --wash: #F0EEE6;
+  --clay: #C86445;
+  --blue: #476B8F;
+  --green: #6F8052;
+  --red: #A94739;
+  --serif: ui-serif, Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+}
+* { box-sizing: border-box; }
+html { background: var(--ivory); }
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--ivory);
+  line-height: 1.58;
+  -webkit-font-smoothing: antialiased;
+}
+.page {
+  width: min(1180px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 52px 0 96px;
+}
+.report-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  gap: 40px;
+  align-items: end;
+  border-bottom: 1.5px solid var(--line);
+  padding-bottom: 30px;
+  margin-bottom: 34px;
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+h1 {
+  margin: 0 0 14px;
+  font-family: var(--serif);
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--slate);
+  letter-spacing: 0;
+  max-width: 900px;
+}
+.dek {
+  max-width: 820px;
+  font-size: 18px;
+  color: var(--ink);
+  margin: 0;
+}
+.meta-panel {
+  border-left: 2px solid var(--clay);
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.meta-panel b {
+  display: block;
+  color: var(--slate);
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+section { margin: 44px 0 56px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 27px;
+  color: var(--slate);
+  letter-spacing: 0;
+}
+h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--slate);
+}
+p { margin: 0 0 12px; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+  font-family: var(--mono);
+  font-size: .92em;
+  background: var(--wash);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 5px;
+  overflow-wrap: anywhere;
+}
+.callout {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--clay);
+  padding: 22px 24px;
+  margin-top: 20px;
+}
+.finding-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.finding {
+  min-width: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.finding .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.finding .value {
+  font-family: var(--serif);
+  font-size: 25px;
+  line-height: 1.15;
+  color: var(--slate);
+  overflow-wrap: anywhere;
+}
+.finding p {
+  font-size: 13.5px;
+  color: var(--ink);
+  margin: 0;
+}
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.panel {
+  min-width: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 20px;
+}
+.panel.accent-blue { border-top: 3px solid var(--blue); }
+.panel.accent-clay { border-top: 3px solid var(--clay); }
+.panel.accent-green { border-top: 3px solid var(--green); }
+.panel p, .panel li { font-size: 14px; }
+.panel ul {
+  margin: 10px 0 0 18px;
+  padding: 0;
+}
+.diagram {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 22px;
+  overflow: hidden;
+}
+svg { width: 100%; height: auto; display: block; }
+.caption {
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 11.5px;
+  margin-top: 12px;
+}
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 12px 14px;
+  border-bottom: 1.5px solid var(--line);
+  background: #FBFAF7;
+  white-space: nowrap;
+}
+td {
+  vertical-align: top;
+  padding: 14px;
+  border-bottom: 1px solid var(--wash);
+  overflow-wrap: anywhere;
+}
+tr:last-child td { border-bottom: 0; }
+.pill {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.pill.direct { background: rgba(111,128,82,.16); color: var(--green); }
+.pill.clue { background: rgba(200,100,69,.16); color: var(--clay); }
+.pill.eco { background: rgba(71,107,143,.14); color: var(--blue); }
+.pill.unproven { background: rgba(169,71,57,.12); color: var(--red); }
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.thesis {
+  background: var(--slate);
+  color: #F7F3EA;
+  padding: 24px;
+}
+.thesis h3 { color: #FFFFFF; }
+.thesis p { color: #E9E2D5; }
+.sources {
+  columns: 2;
+  column-gap: 44px;
+  font-size: 13px;
+}
+.sources li {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+details {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  margin-top: 16px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--slate);
+}
+.small { font-size: 13px; color: var(--muted); }
+@media (max-width: 980px) {
+  .report-header,
+  .finding-grid,
+  .matrix,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+  .meta-panel { border-left: 0; border-top: 2px solid var(--clay); padding: 16px 0 0; }
+  .sources { columns: 1; }
+}
+@media (max-width: 720px) {
+  .page { width: min(100vw - 28px, 1180px); padding-top: 34px; }
+  h1 { font-size: 34px; }
+  h2 { font-size: 23px; }
+  .dek { font-size: 16px; }
+  .table-wrap { overflow-x: visible; border: 0; background: transparent; }
+  .table-wrap table { min-width: 0; }
+  .table-wrap thead { display: none; }
+  .table-wrap tbody,
+  .table-wrap tr,
+  .table-wrap td { display: block; width: 100%; }
+  .table-wrap tr {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+  .table-wrap td {
+    display: block;
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--wash);
+  }
+  .table-wrap td:last-child { border-bottom: 0; }
+  .table-wrap td::before {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .product-table td:nth-child(1)::before { content: "Product"; }
+  .product-table td:nth-child(2)::before { content: "Layer"; }
+  .product-table td:nth-child(3)::before { content: "Function"; }
+  .product-table td:nth-child(4)::before { content: "Rubin read"; }
+  .linkx-table td:nth-child(1)::before { content: "Company"; }
+  .linkx-table td:nth-child(2)::before { content: "Confidence"; }
+  .linkx-table td:nth-child(3)::before { content: "Evidence"; }
+  .linkx-table td:nth-child(4)::before { content: "Investment"; }
+  .photonics-table td:nth-child(1)::before { content: "Company"; }
+  .photonics-table td:nth-child(2)::before { content: "Role"; }
+  .photonics-table td:nth-child(3)::before { content: "Evidence"; }
+  .photonics-table td:nth-child(4)::before { content: "Investment"; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="report-header">
+    <div>
+      <div class="eyebrow">NVDA Tech Roadmap · Rubin Networking · 2026-05-15</div>
+      <h1>Rubin Scale-Out Networking Supplier Map</h1>
+      <p class="dek">Spectrum-X, Quantum-X, and LinkX all belong to Rubin’s scale-out domain, but they occupy different layers. The investable supplier clues differ sharply between the shipping LinkX pluggable path and NVIDIA’s newer co-packaged photonics architecture.</p>
+    </div>
+    <div class="meta-panel">
+      <b>Research Scope</b>
+      Public NVIDIA, Broadcom, Lumentum, and Coherent disclosures on Rubin-era scale-out networking, LinkX transceivers, and Spectrum-X / Quantum-X photonics.
+    </div>
+  </header>
+
+  <section>
+    <div class="section-head"><span class="section-num">01</span><h2>Key Findings</h2></div>
+    <div class="finding-grid">
+      <div class="finding">
+        <div class="label">Stack distinction</div>
+        <div class="value">Platforms vs. links</div>
+        <p>Spectrum-X and Quantum-X are networking platforms; LinkX is the cable and transceiver family inside those platforms.</p>
+      </div>
+      <div class="finding">
+        <div class="label">Current TAM</div>
+        <div class="value">LinkX broader today</div>
+        <p>LinkX covers DACs, AOCs, and pluggable optics across a larger currently deployed base.</p>
+      </div>
+      <div class="finding">
+        <div class="label">Frontier architecture</div>
+        <div class="value">Photonics newer</div>
+        <p>Spectrum-X / Quantum-X Photonics are the newer CPO switch architectures for top-end AI factories.</p>
+      </div>
+      <div class="finding">
+        <div class="label">Best supplier clues</div>
+        <div class="value">AVGO, LITE, COHR</div>
+        <p>Broadcom is the strongest public LinkX component clue; Lumentum and Coherent are the clearest photonics ecosystem clues.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p><strong>Bottom line:</strong> LinkX is the visible pluggable interconnect path in Rubin documentation. Spectrum-X / Quantum-X Photonics are the higher-value architectural direction. For public equities, the cleaner evidence currently points to Broadcom around LinkX components and to Lumentum, Coherent, TSMC, and Fabrinet around switch-side photonics.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">02</span><h2>Scale-Out Taxonomy</h2></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1120 360" role="img" aria-label="Rubin networking taxonomy">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#87867F"></path>
+          </marker>
+        </defs>
+        <rect x="20" y="34" width="1080" height="292" rx="10" fill="#FAF9F5" stroke="#D8D5CA"></rect>
+        <text x="48" y="68" font-family="ui-monospace, monospace" font-size="12" fill="#74736D">RUBIN NETWORKING DOMAINS</text>
+
+        <rect x="54" y="100" width="300" height="166" rx="6" fill="#FFFFFF" stroke="#D8D5CA"></rect>
+        <text x="78" y="134" font-family="Georgia, serif" font-size="27" fill="#141413">Scale-up</text>
+        <text x="78" y="170" font-family="system-ui, sans-serif" font-size="16" fill="#32322F">NVLink 6</text>
+        <text x="78" y="198" font-family="system-ui, sans-serif" font-size="16" fill="#32322F">NVLink Switch trays</text>
+        <text x="78" y="226" font-family="system-ui, sans-serif" font-size="14" fill="#74736D">One tightly coupled GPU domain</text>
+
+        <rect x="410" y="100" width="300" height="166" rx="6" fill="#FFF9F6" stroke="#C86445"></rect>
+        <text x="434" y="134" font-family="Georgia, serif" font-size="27" fill="#141413">Scale-out platform</text>
+        <text x="434" y="170" font-family="system-ui, sans-serif" font-size="16" fill="#32322F">Spectrum-X = Ethernet</text>
+        <text x="434" y="198" font-family="system-ui, sans-serif" font-size="16" fill="#32322F">Quantum-X = InfiniBand</text>
+        <text x="434" y="226" font-family="system-ui, sans-serif" font-size="14" fill="#74736D">Switch systems and transport fabric</text>
+
+        <rect x="766" y="100" width="300" height="166" rx="6" fill="#F7FAF3" stroke="#6F8052"></rect>
+        <text x="790" y="134" font-family="Georgia, serif" font-size="27" fill="#141413">Physical links</text>
+        <text x="790" y="170" font-family="system-ui, sans-serif" font-size="16" fill="#32322F">LinkX DAC / AOC</text>
+        <text x="790" y="198" font-family="system-ui, sans-serif" font-size="16" fill="#32322F">LinkX optical transceivers</text>
+        <text x="790" y="226" font-family="system-ui, sans-serif" font-size="14" fill="#74736D">Cables and pluggables within scale-out</text>
+
+        <line x1="354" y1="183" x2="410" y2="183" stroke="#87867F" stroke-width="2.5" marker-end="url(#arrow)"></line>
+        <line x1="710" y1="183" x2="766" y2="183" stroke="#87867F" stroke-width="2.5" marker-end="url(#arrow)"></line>
+      </svg>
+      <p class="caption">Spectrum-X / Quantum-X and LinkX are both scale-out, but they are not substitute products. LinkX is the physical interconnect layer used by the networking platforms.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">03</span><h2>Product Layer Map</h2></div>
+    <div class="table-wrap">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Layer</th>
+            <th>Function</th>
+            <th>Rubin-era read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>LinkX</strong></td>
+            <td>Physical interconnect</td>
+            <td>DACs, AOCs, pluggable optical transceivers, fibers, and cable assemblies</td>
+            <td>Visible Rubin NVL8 optical module path through <code>MMS4X00-NM-HGX</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>Spectrum-X</strong></td>
+            <td>Ethernet platform</td>
+            <td>Ethernet AI-factory switching, transport, telemetry, and congestion control</td>
+            <td>Rubin scale-out Ethernet platform; photonics variant is the newer architecture.</td>
+          </tr>
+          <tr>
+            <td><strong>Quantum-X</strong></td>
+            <td>InfiniBand platform</td>
+            <td>InfiniBand switching and transport for top-end AI clusters</td>
+            <td>Rubin scale-out InfiniBand platform through Quantum-X800 / photonics roadmap.</td>
+          </tr>
+          <tr>
+            <td><strong>NVLink 6</strong></td>
+            <td>Scale-up fabric</td>
+            <td>GPU-to-GPU domain fabric and NVLink Switch trays</td>
+            <td>Not a LinkX product; publicly presented as NVIDIA proprietary scale-up.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">04</span><h2>Supplier Evidence: LinkX Pluggables</h2></div>
+    <div class="table-wrap">
+      <table class="linkx-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Confidence</th>
+            <th>Evidence</th>
+            <th>Investment read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NVIDIA / Mellanox / LinkX</strong></td>
+            <td><span class="pill direct">Direct</span></td>
+            <td>The Rubin NVL8 optical module spec uses <code>MT</code> for “Manufacturer name (Mellanox Technologies).”</td>
+            <td>Vendor-of-record for the visible Rubin LinkX module.</td>
+          </tr>
+          <tr>
+            <td><strong>Broadcom</strong></td>
+            <td><span class="pill clue">Strong clue</span></td>
+            <td>Broadcom publicly described itself as an important optical-component partner to NVIDIA; the supporting quote came from NVIDIA’s VP of LinkX products.</td>
+            <td>Best public component clue inside the LinkX transceiver ecosystem.</td>
+          </tr>
+          <tr>
+            <td><strong>Coherent</strong></td>
+            <td><span class="pill eco">Ecosystem</span></td>
+            <td>NVIDIA has identified Coherent as part of the optical ecosystem around AI networking.</td>
+            <td>Plausible optics and laser exposure, but not pinned to the visible Rubin LinkX SKU.</td>
+          </tr>
+          <tr>
+            <td><strong>Eoptolink / Innolight</strong></td>
+            <td><span class="pill eco">Ecosystem</span></td>
+            <td>Named in the broader NVIDIA / Broadcom terabit optical module ecosystem.</td>
+            <td>Likely module ecosystem relevance; weaker for US-listed exposure.</td>
+          </tr>
+          <tr>
+            <td><strong>Credo / Marvell</strong></td>
+            <td><span class="pill unproven">Unproven</span></td>
+            <td>No public Rubin LinkX document checked here proves either company is inside the visible LinkX module.</td>
+            <td>Do not underwrite Rubin LinkX exposure as confirmed for CRDO or MRVL.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">05</span><h2>Supplier Evidence: Spectrum-X / Quantum-X Photonics</h2></div>
+    <div class="table-wrap">
+      <table class="photonics-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Role clue</th>
+            <th>Public evidence</th>
+            <th>Investment read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lumentum</strong></td>
+            <td>High-power external lasers</td>
+            <td>Lumentum says its lasers are selected for new Spectrum-X Photonics switches.</td>
+            <td>Clearest public laser exposure to NVIDIA switch-side photonics.</td>
+          </tr>
+          <tr>
+            <td><strong>Coherent</strong></td>
+            <td>Optics and laser ecosystem</td>
+            <td>Recognized by NVIDIA as an ecosystem innovation partner on silicon photonics networking switches.</td>
+            <td>Strong public CPO ecosystem exposure, though less singular than LITE.</td>
+          </tr>
+          <tr>
+            <td><strong>TSMC</strong></td>
+            <td>Silicon / packaging foundry</td>
+            <td>Named in NVIDIA’s silicon photonics ecosystem.</td>
+            <td>Foundry and packaging exposure across the photonics architecture.</td>
+          </tr>
+          <tr>
+            <td><strong>Fabrinet</strong></td>
+            <td>Manufacturing / assembly</td>
+            <td>Named in NVIDIA’s photonics ecosystem.</td>
+            <td>Likely production support exposure; attractive because photonics assembly is operationally hard.</td>
+          </tr>
+          <tr>
+            <td><strong>Corning</strong></td>
+            <td>Fiber / optical materials</td>
+            <td>Named in NVIDIA’s photonics ecosystem.</td>
+            <td>Lower-purity but real fiber-material exposure.</td>
+          </tr>
+          <tr>
+            <td><strong>SPIL / SENKO / Sumitomo Electric / Foxconn / TFC / Browave</strong></td>
+            <td>Packaging, fiber attach, components</td>
+            <td>Named ecosystem partners.</td>
+            <td>Important operationally; less clean for US-listed pure-play exposure.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">06</span><h2>TAM And Timing</h2></div>
+    <div class="two-col">
+      <div class="panel accent-blue">
+        <h3>LinkX has the larger served TAM today</h3>
+        <p>LinkX spans a wider deployed base: DACs, AOCs, pluggable optics, and cables across Spectrum, Quantum, ConnectX, and BlueField systems. It is the current monetized scale-out interconnect layer.</p>
+        <p class="small">Confidence: inferred from product scope and availability, not a published NVIDIA TAM figure.</p>
+      </div>
+      <div class="panel accent-clay">
+        <h3>Photonics is the higher-value frontier architecture</h3>
+        <p>Spectrum-X / Quantum-X Photonics compress the switch-side optics problem into co-packaged photonic engines, external lasers, packaging, and fiber attach. The revenue base is less mature, but the strategic value per frontier switch is higher.</p>
+        <p class="small">Confidence: architecture-driven inference supported by NVIDIA’s CPO positioning.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">07</span><h2>Rubin Technology Read</h2></div>
+    <div class="matrix">
+      <div class="panel accent-green">
+        <h3>Visible Rubin NVL8 module</h3>
+        <p><code>MMS4X00-NM-HGX</code> is an 800G LinkX optical transceiver documented for Rubin NVL8 links into Spectrum switches.</p>
+      </div>
+      <div class="panel accent-clay">
+        <h3>Newest Ethernet architecture</h3>
+        <p>NVIDIA says Spectrum-X Ethernet Photonics is integrated into Rubin, making it the newest disclosed Ethernet-side scale-out architecture.</p>
+      </div>
+      <div class="panel accent-blue">
+        <h3>InfiniBand counterpart</h3>
+        <p>Quantum-X800 / Quantum-X Photonics is the InfiniBand-side frontier direction for scale-out AI-factory networking.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">08</span><h2>Investment Conclusion</h2></div>
+    <div class="thesis">
+      <h3>The public evidence is cleaner for NVIDIA photonics suppliers than for Credo-style Rubin LinkX exposure.</h3>
+      <p>For LinkX, NVIDIA / Mellanox remains the module vendor-of-record and Broadcom is the strongest external component clue. For Spectrum-X / Quantum-X Photonics, NVIDIA has explicitly named a wider ecosystem, with Lumentum and Coherent standing out on lasers and optics, TSMC on silicon / packaging, and Fabrinet on manufacturing.</p>
+      <p>The practical underwriting split is: use LinkX for current scale-out interconnect TAM and photonics for the frontier CPO architecture. Do not treat CRDO or MRVL as confirmed Rubin LinkX suppliers unless a future disclosure pins them to a specific NVIDIA part or design win.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">09</span><h2>Sources</h2></div>
+    <div class="panel">
+      <ul class="sources">
+        <li><a href="https://docs.nvidia.com/networking/display/cableovpub/nvidia+networking+overview">NVIDIA Networking Overview</a></li>
+        <li><a href="https://docs.nvidia.com/networking/display/mms4x00nmhgx500">NVIDIA MMS4X00-NM-HGX overview</a></li>
+        <li><a href="https://docs.nvidia.com/networking/display/mms4x00nmhgx500/specifications">NVIDIA MMS4X00-NM-HGX specifications</a></li>
+        <li><a href="https://developer.nvidia.com/blog/inside-the-nvidia-rubin-platform-six-new-chips-one-ai-supercomputer/">Inside the NVIDIA Vera Rubin Platform</a></li>
+        <li><a href="https://www.nvidia.com/en-gb/data-center/technologies/rubin/">NVIDIA Vera Rubin platform page</a></li>
+        <li><a href="https://www.nvidia.com/en-us/data-center/nvlink/">NVIDIA NVLink and NVLink Switch</a></li>
+        <li><a href="https://nvidianews.nvidia.com/news/nvidia-completes-acquisition-of-mellanox-creating-major-force-driving-next-gen-data-centers">NVIDIA completes acquisition of Mellanox</a></li>
+        <li><a href="https://www.nvidia.com/en-us/networking/products/interconnect/">NVIDIA LinkX interconnect overview</a></li>
+        <li><a href="https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories/?linkId=100000349582294">NVIDIA photonics ecosystem announcement</a></li>
+        <li><a href="https://developer.nvidia.com/blog/scaling-ai-factories-with-co-packaged-optics-for-better-power-efficiency/">Scaling AI Factories with Co-Packaged Optics</a></li>
+        <li><a href="https://developer.nvidia.com/blog/scaling-power-efficient-ai-factories-with-nvidia-spectrum-x-ethernet-photonics/">Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics</a></li>
+        <li><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-extends-technology-and-volume-leadership-ai-optical">Broadcom optical-components announcement</a></li>
+        <li><a href="https://investor.lumentum.com/financial-news-releases/news-details/2025/Lumentum-Selected-as-an-NVIDIA-Silicon-Photonics-Ecosystem-Partnerto-Advance-AI-Networking-at-Scale/default.aspx">Lumentum NVIDIA ecosystem partner release</a></li>
+        <li><a href="https://www.coherent.com/news/press-releases/coherent-recognized-as-nvidia-ecosystem-innovation-partner">Coherent NVIDIA ecosystem partner release</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+</body>
+</html>
